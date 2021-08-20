@@ -108,7 +108,7 @@
                   @click="rowLabelClick">
                 <span v-html="recordLabel(pageTop + rowPos + 1, record)"></span>
               </td>
-              <template v-for="(item, p) in fields">
+              <template v-for="(item, p) in fields" :key="p">
                 <td v-show="!item.invisible"
                     :id="`id-${record.$id}-${item.name}`"
                     :cell-RC="`${rowPos}-${item.name}`"
@@ -121,7 +121,6 @@
                       'sticky-column': item.sticky
                     }"
                     :style="Object.assign(cellStyle(record, item), renderColumnCellStyle(item))"
-                    :key="p"
                     @mouseover="cellMouseOver"
                     @mousemove="cellMouseMove">{{ item.toText(record[item.name]) }}</td>
               </template>
@@ -131,7 +130,7 @@
           <tfoot>
             <tr v-show="pagingTable.length && summaryRow">
               <td class="row-summary first-col">&nbsp;</td>
-              <template v-for="(field, p) in fields">
+              <template v-for="(field, p) in fields" :key="`f${p}`">
                 <td v-show="!field.invisible"
                     class="row-summary"
                     :colspan="p === fields.length - 1 && vScroller.buttonHeight < vScroller.height ? 2: 1"
@@ -141,7 +140,7 @@
                       'summary-column2': field.summary
                     }"
                     :style="renderColumnCellStyle(field)"
-                    :key="`f${p}`">{{ summary[field.name] }}</td>
+                >{{ summary[field.name] }}</td>
               </template>
             </tr>
           </tfoot>
